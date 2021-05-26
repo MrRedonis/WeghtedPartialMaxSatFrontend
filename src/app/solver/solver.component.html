@@ -1,0 +1,20 @@
+<div>
+      <ul class="form-style-1">
+        <li>
+            <label>Input <span class="required">*</span></label>
+            <textarea name="input_field" id="input_field" class="field-long field-textarea" [(ngModel)]="formuls"></textarea>
+        </li>
+        <li>
+            <button (click)="solve()" class="btn btn-primary" >Solve</button>
+        </li>
+    </ul>
+</div>
+
+<div>
+  <ul class="form-style-1">
+        <li>
+            <label>Output</label>
+            <textarea name="output_field" id="output_field" class="field-long field-textarea">{{message}}</textarea>
+        </li>
+    </ul>
+</div>
