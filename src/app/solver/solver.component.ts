@@ -1,11 +1,6 @@
 import {Component, Input, NgModule, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
-import {SendForm} from "../models/SendForm";
-import {Clause} from "../models/Clause";
 import {SolverService} from "../solver.service";
-import {waitForAsync} from "@angular/core/testing";
-import {Subscription} from "rxjs";
-
 @Component({
   selector: 'app-solver',
   templateUrl: './solver.component.html',
@@ -75,12 +70,11 @@ export class SolverComponent implements OnInit {
     this.api.create(this.form.value).subscribe(
       response => {
         this.response = response;
-        // @ts-ignore
-        var obj = JSON.parse(response);
-        this.cost = obj.cost;
-        this.solution = obj.solution;
-        this.final_soft_clauses = obj.final_soft_clauses;
-        this.final_hard_clauses = obj.final_hard_clauses;
+
+        this.cost = this.response["cost"];
+        this.solution = this.response["solution"];
+        this.final_soft_clauses = this.response["final_soft_clauses"];
+        this.final_hard_clauses = this.response["final_hard_clauses"];
         this.message = this.printResult();
       },
       error => {
@@ -88,22 +82,14 @@ export class SolverComponent implements OnInit {
             this.message = this.printUnsat()
         }
     )
-    console.log(this.cost);
-    console.log(this.solution);
-    console.log(this.final_soft_clauses);
-    console.log(this.final_hard_clauses);
-  }
-
-  prepareData(result: any){
-    return JSON.parse(JSON.stringify(result));
   }
 
   printResult() {
-    return("Maksymalna waga rozwiązania: " + (this.sumOfWeights-this.cost) +"\nRozwiązanie: "+ this.solution + "\nKlauzule \"soft\": " + this.final_soft_clauses + "\nKlauzule \"hard\": " + this.final_hard_clauses);
+    return("SATISFIABLE\nMaksymalna waga rozwiązania: " + (this.sumOfWeights-this.cost) +"\nRozwiązanie: "+ this.solution + "\nKlauzule \"soft\": " + this.final_soft_clauses + "\nKlauzule \"hard\": " + this.final_hard_clauses);
   }
 
   printUnsat() {
-    return("UNSAT")
+    return("UNSATISFIABLE or ERROR")
   }
 }
 
