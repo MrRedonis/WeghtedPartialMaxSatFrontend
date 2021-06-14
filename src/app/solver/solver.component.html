@@ -1,20 +1,37 @@
-<div>
-      <ul class="form-style-1">
-        <li>
-            <label>Input <span class="required">*</span></label>
-            <textarea name="input_field" id="input_field" class="field-long field-textarea" [(ngModel)]="formuls"></textarea>
-        </li>
-        <li>
-            <button (click)="solve()" class="btn btn-primary" >Solve</button>
-        </li>
-    </ul>
+<div class="container">
+
+  <h2>Partial Weighted Max SAT Solver</h2>
+
+  <form class="form-horizontal">
+  <fieldset>
+
+  <!-- Form Name -->
+  <legend></legend>
+
+  <!-- Textarea -->
+  <div class="form-group">
+    <label class="col-md-8 control-label" for="input">Input</label>
+    <div class="col-md-8">
+      <textarea class="form-control" placeholder="Input" id="input" name="textarea" rows="10" [(ngModel)]="formuls"></textarea>
+    </div>
+  </div>
+
+  <!-- Button -->
+  <div class="form-group">
+    <div class="col-md-8">
+      <button id="singlebutton" name="singlebutton" class="btn btn-primary" (click)="solve()">Solve</button>
+    </div>
+  </div>
+
+  </fieldset>
+  </form>
+
+  <div class="form-group">
+    <label class="col-md-8 control-label" for="output">Output</label>
+    <div class="col-md-8">
+      <textarea class="form-control"  placeholder="Output" id="output" name="textarea" rows="10">{{message}}</textarea>
+    </div>
+  </div>
 </div>
 
-<div>
-  <ul class="form-style-1">
-        <li>
-            <label>Output</label>
-            <textarea name="output_field" id="output_field" class="field-long field-textarea">{{message}}</textarea>
-        </li>
-    </ul>
-</div>
+

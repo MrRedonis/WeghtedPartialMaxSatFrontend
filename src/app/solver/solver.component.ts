@@ -18,6 +18,7 @@ export class SolverComponent implements OnInit {
   private final_soft_clauses: any;
   private final_hard_clauses: any;
   public message: string = '';
+  private answer: any;
 
   constructor(public fb: FormBuilder, private api:SolverService) {
     this.form = this.fb.group({
@@ -48,9 +49,7 @@ export class SolverComponent implements OnInit {
 
   }
 
-
   ngOnInit(): void {}
-
 
   solve() {
     this.sumOfWeights = 0;
@@ -70,16 +69,25 @@ export class SolverComponent implements OnInit {
     this.api.create(this.form.value).subscribe(
       response => {
         this.response = response;
+        console.log(response);
 
         this.cost = this.response["cost"];
         this.solution = this.response["solution"];
         this.final_soft_clauses = this.response["final_soft_clauses"];
         this.final_hard_clauses = this.response["final_hard_clauses"];
-        this.message = this.printResult();
+        this.answer = this.response["answer"];
+
+        if (this.answer == "SAT"){
+          this.message = this.printResult();
+        }
+        else{
+          this.message = this.printUnsat();
+        }
+
       },
       error => {
             console.error(error);
-            this.message = this.printUnsat()
+            this.message = this.printError();
         }
     )
   }
@@ -89,7 +97,11 @@ export class SolverComponent implements OnInit {
   }
 
   printUnsat() {
-    return("UNSATISFIABLE or ERROR")
+    return("UNSATISFIABLE");
+  }
+
+  printError() {
+    return("ERROR");
   }
 }
 
