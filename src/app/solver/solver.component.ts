@@ -92,8 +92,23 @@ export class SolverComponent implements OnInit {
     )
   }
 
+  prepareOutputClauses(clauses: Array<Array<any>>){
+    var output = "";
+
+    if (clauses.length == 0){
+      output = "None";
+    }
+
+    for (let i = 0; i < clauses.length; i++) {
+      output += "(";
+      output += clauses[i].toString();
+      output += ")";
+    }
+    return output;
+  }
+
   printResult() {
-    return("SATISFIABLE\nMaksymalna waga rozwiązania: " + (this.sumOfWeights-this.cost) +"\nRozwiązanie: "+ this.solution + "\nKlauzule \"soft\": " + this.final_soft_clauses + "\nKlauzule \"hard\": " + this.final_hard_clauses);
+    return("SATISFIABLE\nMaksymalna waga rozwiązania: " + (this.sumOfWeights-this.cost) +"\nRozwiązanie: "+ this.solution + "\nKlauzule \"soft\": " + this.prepareOutputClauses(this.final_soft_clauses) + "\nKlauzule \"hard\": " + this.prepareOutputClauses(this.final_hard_clauses));
   }
 
   printUnsat() {
